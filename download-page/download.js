@@ -1,5 +1,4 @@
 const http = require('http')
-const http = require('http')
 const fs = require('fs')
 const path = require('path')
 const uuidv1 = require('uuid/v1')
@@ -32,3 +31,6 @@ const downloadPage = (url='http://nodeprogram.com') => {
     console.log('downloading is done in folder ', folderName)
   })  
 }
+
+
+downloadPage(process.argv[2])
