@@ -13,30 +13,16 @@ app.use(logger('dev'))
 app.use(errorhandler)
 
 //GET METHOD
-app.get('/accounts', (req, res)=>{
-	res.status(200).send(store.accounts)
-})
+
 
 //POST METHOD
-app.post('/users',(res, req) => {
-	let newAccount = req.bodyParser
-	let id = store.accounts.length
-	store.accounts.push(newAccount)
-	res.status(201).send({id:id})
-})
+
 
 //PUT METHOD
-app.put('/accounts/:id', (req, res) => {
-  store.accounts[req.params.id] = req.body
-  res.status(200).send(store.accounts[req.params.id])
-})
 
 //DELETE METHOD
-app.delete('/accounts/:id', (req, res) => {
-  store.accounts.splice(req.params.id, 1)
-  res.status(204).send()
-})
 
 
 
-app.listen(3000)
+
+app.listen(3000, ()=>{console.log("Listening on port 3000.....")})
