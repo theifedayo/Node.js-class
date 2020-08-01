@@ -1,7 +1,5 @@
+const Joi = require('joi')
 const express = require('express')
-// const logger = require('morgan')
-// const errorhandler = require('errorhandler')
-// const bodyParser = require('body-parser')
 
 const restaurants = [
 	{id: 1, name:"honeygrill"},
@@ -20,14 +18,18 @@ app.get('/api/restaurants',(req, res)=>{
 
 app.get('/api/restaurants/:id', (req, res)=>{
 	const restaurant = restaurants.find(r => r.id === parseInt(req.params.id))
-	if (!restaurant) res.status(404).send('The restaurant was not found')
-		res.send(restaurant)
+	if (!restaurant) return res.status(404).send('The restaurant was not found')
+		res.send(restaurant)  
 })
 
 
 
 //POST METHOD
 app.post('/api/restaurants', (req, res)=>{
+	const { error } = validateRestaurant(req.body) 
+
+	if(error) return res.status(400).send(error.details[0].message)
+
 	const restaurant = {
 		id: restaurants.length + 1,
 		name: req.body.name
@@ -36,9 +38,43 @@ app.post('/api/restaurants', (req, res)=>{
 	res.send(restaurant)
 })
 
+
+
 //PUT METHOD
+app.put('api/restaurants/:id', (req, res)=>{
+	const restaurant = restaurants.find(r => r.id === parseInt(req.params.id))
+	if (!restaurant) return res.status(404).send('The restaurant was not found')
+ 
+	const { error } = validateRestaurant(req.body) 
+
+	if(error) return res.status(400).send(error.details[0].messag
+	restaurant.name = req.body.name
+	res.send(restaurant)
+
+})
+
+
+function validateRestaurant(restaurant){
+	const schema = {
+		name : Joi.string().min(4).required()
+	}
+	return Joi.validate(restaurant, schema)
+}
+
+
 
 //DELETE METHOD
+app.delete('/api/restaurants/:id', (req, res)=>{
+	const restaurant = restaurants.find(r => r. id === parseInt(req.params.id))
+	if (!restaurant) return res.status(404).send('The restaurant was not found')
+ 	
+ 	const index = restaurants.indexOf(restaurant)
+ 	restaurants.splice(index, 1)
+
+ 	res.send(restaurant)
+
+})
+
 
 
 //PORT
