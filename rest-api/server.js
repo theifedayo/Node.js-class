@@ -47,7 +47,7 @@ app.put('api/restaurants/:id', (req, res)=>{
  
 	const { error } = validateRestaurant(req.body) 
 
-	if(error) return res.status(400).send(error.details[0].messag
+	if(error) return res.status(400).send(error.details[0].message)
 	restaurant.name = req.body.name
 	res.send(restaurant)
 
