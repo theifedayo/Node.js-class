@@ -14,12 +14,14 @@ app.use(express.json())
 //GET METHOD
 app.get('/api/restaurants',(req, res)=>{
 	res.send(restaurants)
+	console.log(req.method,':', req.url)
 })
 
 app.get('/api/restaurants/:id', (req, res)=>{
 	const restaurant = restaurants.find(r => r.id === parseInt(req.params.id))
 	if (!restaurant) return res.status(404).send('The restaurant was not found')
 		res.send(restaurant)  
+	console.log(req.method,':', req.url)
 })
 
 
@@ -36,6 +38,7 @@ app.post('/api/restaurants', (req, res)=>{
 	}
 	restaurants.push(restaurant)
 	res.send(restaurant)
+	console.log(req.method,':', req.url)
 })
 
 
@@ -50,6 +53,7 @@ app.put('api/restaurants/:id', (req, res)=>{
 	if(error) return res.status(400).send(error.details[0].message)
 	restaurant.name = req.body.name
 	res.send(restaurant)
+	console.log(req.method,':', req.url)
 
 })
 
